@@ -21,7 +21,20 @@ export default function Comment({ comment }) {
 	);
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
+	const paths = [];
+	for (let i = 1; i <= 100; ++i) {
+		paths.push({
+			params: {
+				id: String(i)
+			}
+		});
+	}
+
+	return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
 	const id = Number(params.id);
 
 	if (!id || id < 1 || id > 100) {
